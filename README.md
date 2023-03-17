@@ -37,3 +37,11 @@ Replace 'algorithm' argument with any of these options:
 - 'Bubble Sort' or 'b'
 - 'Selection Sort' or 's'
 - 'Insertion Sort' or 'i'
+
+### Examples
+```
+arr = [60,24,21,65,93,56,35,10,55,49,86,76] # Define an array
+pus.sort(arr, 'b', 0.02)                    # Visualize the bubble sort of this array with a speed of 0.02s
+
+pus.sort_rand(100, 1, 200, 'i', 0.1) # Auto generate an array of size 100 with elements ranging from 1 to 100 and sort it using insertion sort with speed of 0.1s
+```
