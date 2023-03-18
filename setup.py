@@ -6,7 +6,7 @@ README = (HERE / "README.md").read_text()
 
 setup(
     name='popupsort',
-    version='1.0',
+    version='1.0.1',
     description='A program for visualizing sorting algorithms',
     long_description = README,
     long_description_content_type="text/markdown",
