@@ -15,5 +15,6 @@ setup(
     url='https://github.com/ZouheirN/PopUpSort',
     packages=['popupsort'],
     license='MIT',
+    license_files = LICENSE.md
     zip_safe=False
 )
