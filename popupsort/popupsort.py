@@ -21,7 +21,7 @@ class SortingVisualizer:
         if self.n == 0:
             raise ValueError("Cannot visualize an empty array")
 
-        self.draw_array(self.arr)
+        self.draw_array(self.arr, color='blue')
         self.speed = speed
 
         self.start_time = time.time()
@@ -38,7 +38,7 @@ class SortingVisualizer:
             self.time_label.config(text="Elapsed Time: {:.3f}s".format(self.elapsed_time))
             self.window.after(10, self.update_timer)
 
-    def draw_array(self, arr):
+    def draw_array(self, arr, color):
         self.canvas.delete("all")
         canvas_height = 350
         canvas_width = 600
@@ -47,13 +47,25 @@ class SortingVisualizer:
         spacing = 0
         normalized_arr = [i / max(self.arr) for i in self.arr]
 
+        # calculate font size based on array length
+        font_size = min(int((canvas_width // len(arr)) // 2 + 2), 10)
+
         for i, height in enumerate(normalized_arr):
             x0 = i * x_width + offset + spacing
             y0 = canvas_height - height * 300
             x1 = (i + 1) * x_width + offset
             y1 = canvas_height
-            self.canvas.create_rectangle(x0, y0, x1, y1, fill="blue")
-            self.canvas.create_text(x0 + 2, y0, anchor=SW, text=str(self.arr[i]))
+            self.canvas.create_rectangle(x0, y0, x1, y1, fill=color)
+
+            # draw the label under the rectangle with the adjusted font size
+            label_x = (x0 + x1) / 2
+            label_y = y1 + 25 if i % 2 else y1 + 15
+
+            self.canvas.create_text(label_x, label_y, text=str(self.arr[i]), font=("Arial", font_size))
+
+            # draw a line pointing to the rectangle
+            self.canvas.create_line(label_x, -5 + label_y - font_size // 2, label_x, y0 + (y1 - y0) + font_size // 2,
+                                    width=1)
 
         self.window.update()
 
@@ -62,7 +74,7 @@ class SortingVisualizer:
             for j in range(0, self.n - i - 1):
                 if self.arr[j] > self.arr[j + 1]:
                     self.arr[j], self.arr[j + 1] = self.arr[j + 1], self.arr[j]
-                    self.draw_array(self.arr)
+                    self.draw_array(self.arr, color='blue')
                     time.sleep(self.speed)
         self.completed()
 
@@ -74,7 +86,7 @@ class SortingVisualizer:
                 self.arr[j + 1] = self.arr[j]
                 j -= 1
             self.arr[j + 1] = key
-            self.draw_array(self.arr)
+            self.draw_array(self.arr, color='blue')
             time.sleep(self.speed)
         self.completed()
 
@@ -85,33 +97,17 @@ class SortingVisualizer:
                 if self.arr[j] < self.arr[min_idx]:
                     min_idx = j
             self.arr[i], self.arr[min_idx] = self.arr[min_idx], self.arr[i]
-            self.draw_array(self.arr)
+            self.draw_array(self.arr, color='blue')
             time.sleep(self.speed)
         self.completed()
 
     def completed(self):
         self.timer_stopped = True
-        self.canvas.delete("all")
-        canvas_height = 350
-        canvas_width = 600
-        x_width = canvas_width / (self.n + 1)
-        offset = (canvas_width - (self.n * x_width)) / 2  # calculate the starting point for the first rectangle
-        spacing = 0
-        normalized_arr = [i / max(self.arr) for i in self.arr]
-
-        for i, height in enumerate(normalized_arr):
-            x0 = i * x_width + offset + spacing
-            y0 = canvas_height - height * 300
-            x1 = (i + 1) * x_width + offset
-            y1 = canvas_height
-            self.canvas.create_rectangle(x0, y0, x1, y1, fill="green2")
-            self.canvas.create_text(x0 + 2, y0, anchor=SW, text=str(self.arr[i]))
-
-        self.window.update()
+        self.draw_array(self.arr, color='green2')
         self.window.mainloop()
 
 
-def sort(arr, algorithm, speed):
+def sort(arr, algorithm, speed=0.01):
     if algorithm.lower() == 'bubble sort' or algorithm.lower() == 'b':
         sv = SortingVisualizer(arr, speed)
         sv.bubble_sort()
@@ -123,7 +119,7 @@ def sort(arr, algorithm, speed):
         sv.insertion_sort()
 
 
-def sort_rand(size, min, max, algorithm, speed):
+def sort_rand(size, min, max, algorithm, speed=0.01):
     arr = []
     for i in range(size):
         arr.append(random.randint(min, max))
