@@ -45,5 +45,3 @@ pus.sort(arr, 'b', 0.02)                    # Visualize the bubble sort of this 
 
 pus.sort_rand(50, 1, 100, 'i') # Generate an array of size 50 with elements ranging from 1 to 100 and sort it using insertion sort, speed is 0.01 by default
 ```
-
-I'm open to solutions. If you can fix it, then go ahead!
