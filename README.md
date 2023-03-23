@@ -46,11 +46,4 @@ pus.sort(arr, 'b', 0.02)                    # Visualize the bubble sort of this 
 pus.sort_rand(50, 1, 100, 'i') # Generate an array of size 50 with elements ranging from 1 to 100 and sort it using insertion sort, speed is 0.01 by default
 ```
 
-# Issues
-- If you close the window while the array is still being sorted, then this error will appear
-```python
-_tkinter.TclError: invalid command name ".!canvas"
-```
-- ~~The numbers can sometimes collide with other numbers, this happens when you have a big array size~~ (Fixed!)
-
 I'm open to solutions. If you can fix it, then go ahead!
