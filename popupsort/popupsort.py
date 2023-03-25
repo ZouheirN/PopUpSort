@@ -11,7 +11,6 @@ class SortingVisualizer:
         self.window.title("PopUpSort")
         self.window.geometry("600x450")
         self.window.resizable(False, False)  # disables resizing in both directions
-        self.window.iconbitmap("icon.ico")
 
         self.canvas = Canvas(self.window, width=600, height=400)
         self.canvas.pack()
