@@ -1,5 +1,5 @@
 # PopUpSort
-With the help of ChatGPT-3.5, I was able to create this sorting visualizer. 
+With the assistance of ChatGPT-3.5, I was able to create this sorting visualizer. 
 
 The PopUpSort package is a Python package that visualizes the sorting algorithms: bubble sort, selection sort, and insertion sort. The package uses the Tkinter library for the graphical user interface.
 
