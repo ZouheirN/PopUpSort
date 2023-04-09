@@ -42,6 +42,10 @@ Replace 'algorithm' argument with any of these options:
 - 'Bubble Sort' or 'b'
 - 'Selection Sort' or 's'
 - 'Insertion Sort' or 'i'
+- 'Quick Sort' or 'q'
+- 'Merge Sort' or 'm'
+- 'Heap Sort' or 'h'
+- 'Shell Sort' or 'sh'
 
 ### Examples
 ```python

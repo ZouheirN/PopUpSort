@@ -5,6 +5,12 @@ from tkinter import *
 
 class SortingVisualizer:
     def __init__(self, arr, speed):
+	if not isinstance(arr, list):
+            raise TypeError("Input array must be a list")
+
+        if speed < 0:
+            raise ValueError("Speed must be a non-negative value")
+
         self.arr = arr
         self.n = len(arr)
         self.window = Tk()
@@ -251,11 +257,11 @@ def sort(arr, algorithm, speed=0.01):
         sv.selection_sort()
     elif algorithm.lower() == 'insertion sort' or algorithm.lower() == 'i':
         sv.insertion_sort()
-    elif algorithm.lower() == 'quicksort' or algorithm.lower() == 'q':
+    elif algorithm.lower() == 'quick sort' or algorithm.lower() == 'q':
         sv.quick_sort()
     elif algorithm.lower() == 'merge sort' or algorithm.lower() == 'm':
         sv.merge_sort()
-    elif algorithm.lower() == 'heapsort' or algorithm.lower() == 'h':
+    elif algorithm.lower() == 'heap sort' or algorithm.lower() == 'h':
         sv.heap_sort(arr)
         sv.completed()
     elif algorithm.lower() == 'shell sort' or algorithm.lower() == 'sh':
@@ -275,11 +281,11 @@ def sort_rand(size, min, max, algorithm, speed=0.01):
         sv.selection_sort()
     elif algorithm.lower() == 'insertion sort' or algorithm.lower() == 'i':
         sv.insertion_sort()
-    elif algorithm.lower() == 'quicksort' or algorithm.lower() == 'q':
+    elif algorithm.lower() == 'quick sort' or algorithm.lower() == 'q':
         sv.quick_sort()
     elif algorithm.lower() == 'merge sort' or algorithm.lower() == 'm':
         sv.merge_sort()
-    elif algorithm.lower() == 'heapsort' or algorithm.lower() == 'h':
+    elif algorithm.lower() == 'heap sort' or algorithm.lower() == 'h':
         sv.heap_sort(arr)
         sv.completed()
     elif algorithm.lower() == 'shell sort' or algorithm.lower() == 'sh':
