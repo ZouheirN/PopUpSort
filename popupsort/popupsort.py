@@ -5,7 +5,7 @@ from tkinter import *
 
 class SortingVisualizer:
     def __init__(self, arr, speed):
-	if not isinstance(arr, list):
+        if not isinstance(arr, list):
             raise TypeError("Input array must be a list")
 
         if speed < 0:
