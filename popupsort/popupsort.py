@@ -15,8 +15,11 @@ class SortingVisualizer:
         self.n = len(arr)
         self.window = Tk()
         self.window.title("PopUpSort")
-        self.window.geometry("600x450")
+        self.window.geometry("620x480")
         self.window.resizable(False, False)  # disables resizing in both directions
+
+        self.label = Label(self.window, text="", font=("Helvetica", 16))
+        self.label.pack()
 
         self.canvas = Canvas(self.window, width=600, height=400)
         self.canvas.pack()
@@ -77,7 +80,8 @@ class SortingVisualizer:
             self.canvas.create_text(label_x, label_y, text=str(self.arr[i]), font=("Arial", font_size))
 
             # draw a line pointing to the rectangle
-            self.canvas.create_line(label_x, -5 + label_y - font_size // 2, label_x, y0 + (y1 - y0) + font_size // 2, width=1)
+            self.canvas.create_line(label_x, -5 + label_y - font_size // 2, label_x, y0 + (y1 - y0) + font_size // 2,
+                                    width=1)
 
         self.window.update()
 
@@ -252,19 +256,26 @@ def sort(arr, algorithm, speed=0.01):
     sv = SortingVisualizer(arr, speed)
 
     if algorithm.lower() == 'bubble sort' or algorithm.lower() == 'b':
+        sv.label.config(text="Bubble Sort")
         sv.bubble_sort()
     elif algorithm.lower() == 'selection sort' or algorithm.lower() == 's':
+        sv.label.config(text="Selection Sort")
         sv.selection_sort()
     elif algorithm.lower() == 'insertion sort' or algorithm.lower() == 'i':
+        sv.label.config(text="Insertion Sort")
         sv.insertion_sort()
     elif algorithm.lower() == 'quick sort' or algorithm.lower() == 'q':
+        sv.label.config(text="Quick Sort")
         sv.quick_sort()
     elif algorithm.lower() == 'merge sort' or algorithm.lower() == 'm':
+        sv.label.config(text="Merge Sort")
         sv.merge_sort()
     elif algorithm.lower() == 'heap sort' or algorithm.lower() == 'h':
+        sv.label.config(text="Heap Sort")
         sv.heap_sort(arr)
         sv.completed()
     elif algorithm.lower() == 'shell sort' or algorithm.lower() == 'sh':
+        sv.label.config(text="Shell Sort")
         sv.shell_sort()
 
 
@@ -276,17 +287,24 @@ def sort_rand(size, min, max, algorithm, speed=0.01):
     sv = SortingVisualizer(arr, speed)
 
     if algorithm.lower() == 'bubble sort' or algorithm.lower() == 'b':
+        sv.label.config(text="Bubble Sort")
         sv.bubble_sort()
     elif algorithm.lower() == 'selection sort' or algorithm.lower() == 's':
+        sv.label.config(text="Selection Sort")
         sv.selection_sort()
     elif algorithm.lower() == 'insertion sort' or algorithm.lower() == 'i':
+        sv.label.config(text="Insertion Sort")
         sv.insertion_sort()
     elif algorithm.lower() == 'quick sort' or algorithm.lower() == 'q':
+        sv.label.config(text="Quick Sort")
         sv.quick_sort()
     elif algorithm.lower() == 'merge sort' or algorithm.lower() == 'm':
+        sv.label.config(text="Merge Sort")
         sv.merge_sort()
     elif algorithm.lower() == 'heap sort' or algorithm.lower() == 'h':
+        sv.label.config(text="Heap Sort")
         sv.heap_sort(arr)
         sv.completed()
     elif algorithm.lower() == 'shell sort' or algorithm.lower() == 'sh':
+        sv.label.config(text="Shell Sort")
         sv.shell_sort()
