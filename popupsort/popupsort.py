@@ -1,10 +1,12 @@
 import random
+import re
 import time
 from tkinter import *
 
 
 class SortingVisualizer:
     def __init__(self, arr, speed):
+
         if not isinstance(arr, list):
             raise TypeError("Input array must be a list")
 
@@ -15,14 +17,22 @@ class SortingVisualizer:
         self.n = len(arr)
         self.window = Tk()
         self.window.title("PopUpSort")
-        self.window.geometry("620x480")
+        # self.window.geometry("620x480")
         self.window.resizable(False, False)  # disables resizing in both directions
+
+        window_width = 620
+        window_height = 480
+        x = int(int(self.window.winfo_screenwidth() / 2) - int(window_width / 2))
+        y = int(int(self.window.winfo_screenheight() / 2) - int(window_height / 2))
+        self.window.geometry(f"{window_width}x{window_height}+{x}+{y}")
 
         self.label = Label(self.window, text="", font=("Helvetica", 16))
         self.label.pack()
 
         self.canvas = Canvas(self.window, width=600, height=400)
         self.canvas.pack()
+
+        self.total_time = None
 
         self.time_label = Label(self.window, text="Elapsed Time: 0.000s", fg="black", font=("Helvetica", 16))
         self.time_label.pack(side=BOTTOM)
@@ -42,6 +52,9 @@ class SortingVisualizer:
 
         if self.timer_stopped:
             self.time_label.config(fg='green2')
+            text = self.time_label.cget("text")
+            match = re.search(r'\d+\.\d+', text)
+            self.total_time = float(match.group())
             return
         else:
             self.time_label.config(text="Elapsed Time: {:.3f}s".format(self.elapsed_time))
@@ -77,7 +90,7 @@ class SortingVisualizer:
             label_x = (x0 + x1) / 2
             label_y = y1 + 25 if i % 2 else y1 + 15
 
-            self.canvas.create_text(label_x, label_y, text=str(self.arr[i]), font=("Arial", font_size))
+            self.canvas.create_text(label_x, label_y, text=str(self.arr[i]), font=("Helvetica", font_size))
 
             # draw a line pointing to the rectangle
             self.canvas.create_line(label_x, -5 + label_y - font_size // 2, label_x, y0 + (y1 - y0) + font_size // 2,
@@ -278,6 +291,8 @@ def sort(arr, algorithm, speed=0.01):
         sv.label.config(text="Shell Sort")
         sv.shell_sort()
 
+    return '%.3f' % sv.total_time + 's'
+
 
 def sort_rand(size, min, max, algorithm, speed=0.01):
     arr = []
@@ -308,3 +323,119 @@ def sort_rand(size, min, max, algorithm, speed=0.01):
     elif algorithm.lower() == 'shell sort' or algorithm.lower() == 'sh':
         sv.label.config(text="Shell Sort")
         sv.shell_sort()
+
+    return '%.3f' % sv.total_time + 's'
+
+
+def sort_compare(arr, algorithms, speed=0.01):
+    arr_copy = []
+
+    for i in range(len(algorithms)):
+        arr_copy.append(arr.copy())
+
+    sv = []
+
+    for i in range(len(algorithms)):
+        sv.append(sort(arr_copy[i], algorithms[i], speed))
+
+    for i in range(len(algorithms)):
+        if algorithms[i].lower() == 'insertion sort' or algorithms[i].lower() == 'i':
+            algorithms[i] = 'Insertion Sort'
+        elif algorithms[i].lower() == 'bubble sort' or algorithms[i].lower() == 'b':
+            algorithms[i] = 'Bubble Sort'
+        elif algorithms[i].lower() == 'selection sort' or algorithms[i].lower() == 's':
+            algorithms[i] = 'Selection Sort'
+        elif algorithms[i].lower() == 'merge sort' or algorithms[i].lower() == 'm':
+            algorithms[i] = 'Merge Sort'
+        elif algorithms[i].lower() == 'heap sort' or algorithms[i].lower() == 'h':
+            algorithms[i] = 'Heap Sort'
+        elif algorithms[i].lower() == 'quick sort' or algorithms[i].lower() == 'q':
+            algorithms[i] = 'Quick Sort'
+        elif algorithms[i].lower() == 'shell sort' or algorithms[i].lower() == 'sh':
+            algorithms[i] = 'Shell Sort'
+
+    window = Tk()
+
+    window.title("PopUpSort - Comparison Results")
+
+    window_width = 150 * len(sv)
+    window_height = 100
+    x = int(int(window.winfo_screenwidth() / 2) - int(window_width / 2))
+    y = int(int(window.winfo_screenheight() / 2) - int(window_height / 2))
+    window.geometry(f"{window_width}x{window_height}+{x}+{y}")
+
+    window.resizable(False, False)
+
+    for i in range(len(algorithms)):
+        frame = Frame(window)
+        frame.pack(side="left", padx=20, pady=20)
+
+        label = Label(frame, text=algorithms[i], font=("Helvetica", 16))
+        label.pack(side="top")
+
+        text = Label(frame, text=sv[i], font=("Helvetica", 16))
+        text.pack(side="bottom")
+
+        frame2 = Frame(frame, width=100, height=100)
+        frame2.pack()
+
+    window.mainloop()
+
+
+def sort_compare_rand(size, min, max, algorithms, speed=0.01):
+    arr = []
+    for i in range(size):
+        arr.append(random.randint(min, max))
+
+    arr_copy = []
+
+    for i in range(len(algorithms)):
+        arr_copy.append(arr.copy())
+
+    sv = []
+
+    for i in range(len(algorithms)):
+        sv.append(sort(arr_copy[i], algorithms[i], speed))
+
+    for i in range(len(algorithms)):
+        if algorithms[i].lower() == 'insertion sort' or algorithms[i].lower() == 'i':
+            algorithms[i] = 'Insertion Sort'
+        elif algorithms[i].lower() == 'bubble sort' or algorithms[i].lower() == 'b':
+            algorithms[i] = 'Bubble Sort'
+        elif algorithms[i].lower() == 'selection sort' or algorithms[i].lower() == 's':
+            algorithms[i] = 'Selection Sort'
+        elif algorithms[i].lower() == 'merge sort' or algorithms[i].lower() == 'm':
+            algorithms[i] = 'Merge Sort'
+        elif algorithms[i].lower() == 'heap sort' or algorithms[i].lower() == 'h':
+            algorithms[i] = 'Heap Sort'
+        elif algorithms[i].lower() == 'quick sort' or algorithms[i].lower() == 'q':
+            algorithms[i] = 'Quick Sort'
+        elif algorithms[i].lower() == 'shell sort' or algorithms[i].lower() == 'sh':
+            algorithms[i] = 'Shell Sort'
+
+    window = Tk()
+
+    window.title("PopUpSort - Comparison Results")
+
+    window_width = 150 * len(sv)
+    window_height = 100
+    x = int(int(window.winfo_screenwidth() / 2) - int(window_width / 2))
+    y = int(int(window.winfo_screenheight() / 2) - int(window_height / 2))
+    window.geometry(f"{window_width}x{window_height}+{x}+{y}")
+
+    window.resizable(False, False)
+
+    for i in range(len(algorithms)):
+        frame = Frame(window)
+        frame.pack(side="left", padx=20, pady=20)
+
+        label = Label(frame, text=algorithms[i], font=("Helvetica", 16))
+        label.pack(side="top")
+
+        text = Label(frame, text=sv[i], font=("Helvetica", 16))
+        text.pack(side="bottom")
+
+        frame2 = Frame(frame, width=100, height=100)
+        frame2.pack()
+
+    window.mainloop()
