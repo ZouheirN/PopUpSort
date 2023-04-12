@@ -358,7 +358,7 @@ def sort_compare(arr, algorithms, speed=0.01):
 
     window.title("PopUpSort - Comparison Results")
 
-    window_width = 150 * len(sv)
+    window_width = 130 * len(sv)
     window_height = 100
     x = int(int(window.winfo_screenwidth() / 2) - int(window_width / 2))
     y = int(int(window.winfo_screenheight() / 2) - int(window_height / 2))
@@ -368,12 +368,12 @@ def sort_compare(arr, algorithms, speed=0.01):
 
     for i in range(len(algorithms)):
         frame = Frame(window)
-        frame.pack(side="left", padx=20, pady=20)
+        frame.pack(side="left", padx=15, pady=20)
 
-        label = Label(frame, text=algorithms[i], font=("Helvetica", 16))
+        label = Label(frame, text=algorithms[i], font=("Helvetica", 12))
         label.pack(side="top")
 
-        text = Label(frame, text=sv[i], font=("Helvetica", 16))
+        text = Label(frame, text=sv[i], font=("Helvetica", 12))
         text.pack(side="bottom")
 
         frame2 = Frame(frame, width=100, height=100)
@@ -417,7 +417,7 @@ def sort_compare_rand(size, min, max, algorithms, speed=0.01):
 
     window.title("PopUpSort - Comparison Results")
 
-    window_width = 150 * len(sv)
+    window_width = 130 * len(sv)
     window_height = 100
     x = int(int(window.winfo_screenwidth() / 2) - int(window_width / 2))
     y = int(int(window.winfo_screenheight() / 2) - int(window_height / 2))
@@ -427,12 +427,12 @@ def sort_compare_rand(size, min, max, algorithms, speed=0.01):
 
     for i in range(len(algorithms)):
         frame = Frame(window)
-        frame.pack(side="left", padx=20, pady=20)
+        frame.pack(side="left", padx=15, pady=20)
 
-        label = Label(frame, text=algorithms[i], font=("Helvetica", 16))
+        label = Label(frame, text=algorithms[i], font=("Helvetica", 12))
         label.pack(side="top")
 
-        text = Label(frame, text=sv[i], font=("Helvetica", 16))
+        text = Label(frame, text=sv[i], font=("Helvetica", 12))
         text.pack(side="bottom")
 
         frame2 = Frame(frame, width=100, height=100)
