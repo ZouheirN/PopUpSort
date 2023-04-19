@@ -6,7 +6,6 @@ from tkinter import *
 
 class SortingVisualizer:
     def __init__(self, arr, speed):
-
         if not isinstance(arr, list):
             raise TypeError("Input array must be a list")
 
@@ -39,6 +38,8 @@ class SortingVisualizer:
 
         if self.n == 0:
             raise ValueError("Cannot visualize an empty array")
+
+        self.isCompare = False
 
         self.draw_array(self.arr, color='blue')
         self.speed = speed
@@ -215,31 +216,36 @@ class SortingVisualizer:
         merge_sort_helper(self.arr, 0, self.n - 1)
         self.completed()
 
-    def heapify(self, arr, n, i, highlight):
+    def heapify(self, n, i):
         largest = i
         left = 2 * i + 1
         right = 2 * i + 2
 
-        if left < n and arr[i] < arr[left]:
+        if left < n and self.arr[left] > self.arr[largest]:
             largest = left
 
-        if right < n and arr[largest] < arr[right]:
+        if right < n and self.arr[right] > self.arr[largest]:
             largest = right
 
         if largest != i:
-            arr[i], arr[largest] = arr[largest], arr[i]
-            self.heapify(arr, n, largest, highlight)
-            self.draw_array(arr, color='blue', highlight=highlight)
+            self.arr[i], self.arr[largest] = self.arr[largest], self.arr[i]
+            self.draw_array(self.arr, color='blue', highlight=[i, largest])
+            time.sleep(self.speed)
 
-    def heap_sort(self, arr):
-        n = len(arr)
+            self.heapify(n, largest)
 
-        for i in range(n, -1, -1):
-            self.heapify(arr, n, i, [])
+    def heap_sort(self):
+        for i in range(self.n // 2 - 1, -1, -1):
+            self.heapify(self.n, i)
 
-        for i in range(n - 1, 0, -1):
-            arr[0], arr[i] = arr[i], arr[0]
-            self.heapify(arr, i, 0, [i, 0])
+        for i in range(self.n - 1, 0, -1):
+            self.arr[0], self.arr[i] = self.arr[i], self.arr[0]
+            self.draw_array(self.arr, color='blue', highlight=[0, i])
+            time.sleep(self.speed)
+
+            self.heapify(i, 0)
+
+        self.completed()
 
     def shell_sort(self):
         gap = self.n // 2
@@ -262,11 +268,19 @@ class SortingVisualizer:
     def completed(self):
         self.timer_stopped = True
         self.draw_array(self.arr, color='green2')
-        self.window.mainloop()
+        if not self.isCompare:
+            self.window.mainloop()
+        else:
+            self.window.destroy()
+
+
+isCompare = False
 
 
 def sort(arr, algorithm, speed=0.01):
+    global isCompare
     sv = SortingVisualizer(arr, speed)
+    sv.isCompare = isCompare
 
     if algorithm.lower() == 'bubble sort' or algorithm.lower() == 'b':
         sv.label.config(text="Bubble Sort")
@@ -285,8 +299,7 @@ def sort(arr, algorithm, speed=0.01):
         sv.merge_sort()
     elif algorithm.lower() == 'heap sort' or algorithm.lower() == 'h':
         sv.label.config(text="Heap Sort")
-        sv.heap_sort(arr)
-        sv.completed()
+        sv.heap_sort()
     elif algorithm.lower() == 'shell sort' or algorithm.lower() == 'sh':
         sv.label.config(text="Shell Sort")
         sv.shell_sort()
@@ -318,8 +331,7 @@ def sort_rand(size, min, max, algorithm, speed=0.01):
         sv.merge_sort()
     elif algorithm.lower() == 'heap sort' or algorithm.lower() == 'h':
         sv.label.config(text="Heap Sort")
-        sv.heap_sort(arr)
-        sv.completed()
+        sv.heap_sort()
     elif algorithm.lower() == 'shell sort' or algorithm.lower() == 'sh':
         sv.label.config(text="Shell Sort")
         sv.shell_sort()
@@ -328,6 +340,8 @@ def sort_rand(size, min, max, algorithm, speed=0.01):
 
 
 def sort_compare(arr, algorithms, speed=0.01):
+    global isCompare
+    isCompare = True
     arr_copy = []
 
     for i in range(len(algorithms)):
@@ -380,9 +394,12 @@ def sort_compare(arr, algorithms, speed=0.01):
         frame2.pack()
 
     window.mainloop()
+    isCompare = False
 
 
 def sort_compare_rand(size, min, max, algorithms, speed=0.01):
+    global isCompare
+    isCompare = True
     arr = []
     for i in range(size):
         arr.append(random.randint(min, max))
@@ -439,3 +456,4 @@ def sort_compare_rand(size, min, max, algorithms, speed=0.01):
         frame2.pack()
 
     window.mainloop()
+    isCompare = False
